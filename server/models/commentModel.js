@@ -1,8 +1,8 @@
-var commentSchema = mongoose.Schema({
-    title: String,
-    content: String,
-    username: String,
-    postId: String
-});
+const commentSchema = mongoose.Schema({
+  title: String,
+  content: String,
+  username: String,
+  postId: String
+})
 
-var Comment = mongoose.model('Comment', commentSchema);
+const Comment = mongoose.model('Comment', commentSchema)

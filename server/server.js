@@ -1,7 +1,5 @@
-'use strict'
 // https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
 const express = require('express')
-const app = express()
 const jwt = require('express-jwt')
 const jwks = require('jwks-rsa')
 const cors = require('cors')
@@ -9,6 +7,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const serverConfig = require('./config')
 
+const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
@@ -34,16 +33,16 @@ const authCheck = jwt({
   algorithms: ['RS256']
 })
 
-var postSchema = mongoose.Schema({
+const postSchema = mongoose.Schema({
   title: String,
   content: String,
   username: String
 })
 
-var Post = mongoose.model('Post', postSchema)
+const Post = mongoose.model('Post', postSchema)
 
 app.post('/api/post', (req, res) => {
-  var reqData = req.body
+  const reqData = req.body
   console.log(req.body)
   console.log(req)
   /*
@@ -51,7 +50,7 @@ app.post('/api/post', (req, res) => {
                            content: 'Random stuff here',
                            username: 'Beans'  });
   */
-  var newPost = new Post({
+  const newPost = new Post({
     title: reqData.title,
     content: reqData.content,
     username: reqData.username
@@ -69,7 +68,7 @@ app.post('/api/post', (req, res) => {
 
 app.get('/api/blog', (req, res) => {
   console.log(req)
-  let posts = [
+  const posts = [
     {
       title: 'Testing 1',
       content:
@@ -103,6 +102,67 @@ app.get('/api/blog', (req, res) => {
   ]
 
   res.json(posts)
+})
+
+app.get('/api/battles/private', authCheck, (req, res) => {
+  let privateBattles = [
+    {
+      id: 2111,
+      name: 'Startup Seattle',
+      sponsor: 'Mark Zuckerberg',
+      seedFund: '10M'
+    },
+    {
+      id: 2112,
+      name: 'Startup Vegas',
+      sponsor: 'Bill Gates',
+      seedFund: '20M'
+    },
+    {
+      id: 2113,
+      name: 'Startup Addis-Ababa',
+      sponsor: 'Aliko Dangote',
+      seedFund: '8M'
+    },
+    {
+      id: 2114,
+      name: 'Startup Abuja',
+      sponsor: 'Femi Otedola',
+      seedFund: '5M'
+    },
+    {
+      id: 2115,
+      name: 'Startup Paris',
+      sponsor: 'Jeff Bezos',
+      seedFund: '1.6M',
+    },
+    {
+      id: 2116,
+      name: 'Startup London',
+      sponsor: 'Dave McClure',
+      seedFund: '1M',
+    },
+    {
+      id: 2117,
+      name: 'Startup Oslo',
+      sponsor: 'Paul Graham',
+      seedFund: '2M',
+    },
+    {
+      id: 2118,
+      name: 'Startup Bangkok',
+      sponsor: 'Jeff Clavier',
+      seedFund: '5M',
+    },
+    {
+      id: 2119,
+      name: 'Startup Seoul',
+      sponsor: 'Paul Buchheit',
+      seedFund: '4M',
+    },
+  ]
+
+  res.json(privateBattles)
 })
 
 /*

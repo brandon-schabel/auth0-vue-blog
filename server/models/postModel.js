@@ -1,7 +1,7 @@
-var postSchema = mongoose.Schema({
+const postSchema = mongoose.Schema({
     title: String,
     content: String,
     username: String,
-});
+})
 
-var Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema);
