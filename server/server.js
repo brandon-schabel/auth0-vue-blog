@@ -16,7 +16,7 @@ mongoose.connect(serverConfig.dburl)
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function() {
+db.once('open', function () {
   console.log('Connected to database.')
 })
 
@@ -25,7 +25,7 @@ const authCheck = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: serverConfig.jwksUri
+    jwksUri: serverConfig.jwksUri,
   }),
   // This is the identifier we set when we created the API
   audience: serverConfig.audience,
@@ -36,7 +36,7 @@ const authCheck = jwt({
 const postSchema = mongoose.Schema({
   title: String,
   content: String,
-  username: String
+  username: String,
 })
 
 const Post = mongoose.model('Post', postSchema)
