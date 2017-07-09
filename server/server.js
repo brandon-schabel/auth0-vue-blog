@@ -104,14 +104,14 @@ app.get('/api/blog', (req, res) => {
   res.json(posts)
 })
 
-app.get('/api/battles/private', authCheck, (req, res) => {
-  let privateBattles = [
+app.get('/api/private/profile', authCheck, (req, res) => {
+  const users = [
     {
-      id: 2111,
-      name: 'Startup Seattle',
-      sponsor: 'Mark Zuckerberg',
-      seedFund: '10M'
+      username: 'beans',
+      fullName: 'Beans Rice',
+      hobbies: 'programming',
     },
+    /*
     {
       id: 2112,
       name: 'Startup Vegas',
@@ -159,10 +159,10 @@ app.get('/api/battles/private', authCheck, (req, res) => {
       name: 'Startup Seoul',
       sponsor: 'Paul Buchheit',
       seedFund: '4M',
-    },
+    }, */
   ]
 
-  res.json(privateBattles)
+  res.json(users)
 })
 
 /*
