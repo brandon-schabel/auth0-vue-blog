@@ -7,6 +7,12 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const serverConfig = require('./config')
 
+/*
+const Comment = require('./models/commentModel');
+const Post = require('./models/postModel')
+const User = require('./models/userModel')
+*/
+
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -16,7 +22,7 @@ mongoose.connect(serverConfig.dburl)
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function () {
+db.once('open', () => {
   console.log('Connected to database.')
 })
 
@@ -30,7 +36,7 @@ const authCheck = jwt({
   // This is the identifier we set when we created the API
   audience: serverConfig.audience,
   issuer: serverConfig.audience,
-  algorithms: ['RS256']
+  algorithms: ['RS256'],
 })
 
 const postSchema = mongoose.Schema({
@@ -53,15 +59,18 @@ app.post('/api/post', (req, res) => {
   const newPost = new Post({
     title: reqData.title,
     content: reqData.content,
-    username: reqData.username
+    username: reqData.username,
   })
   console.log(newPost)
 
-  newPost.save(function(err, postResult) {
+  newPost.save((err, postResult) => {
     if (err) return console.error(err)
 
+    console.log(postResult)
     console.log('Post created successfully.')
     res.send('Good')
+
+    return 'Good'
     // fluffy.speak();
   })
 })
@@ -73,32 +82,32 @@ app.get('/api/blog', (req, res) => {
       title: 'Testing 1',
       content:
         'dlkjkfldsksjf fdlfjdlkkjfldf df dljfdsjf fd fdlf;dssfjdsslklkf df jdslfjdslfjldsjf dfl;djf',
-      user: 'beans'
+      user: 'beans',
     },
     {
       title: 'Testing 2',
       content:
         'dlkjkfldsksjf fdlfjdlkkjfldf df dljfdsjf fd fdlf;dssfjdsslklkf df jdslfjdslfjldsjf dfl;djf',
-      user: 'beans'
+      user: 'beans',
     },
     {
       title: 'Testing 3',
       content:
         'dlkjkfldsksjf fdlfjdlkkjfldf df dljfdsjf fd fdlf;dssfjdsslklkf df jdslfjdslfjldsjf dfl;djf',
-      user: 'beans'
+      user: 'beans',
     },
     {
       title: 'Testing 3',
       content:
         'dlkjkfldsksjf fdlfjdlkkjfldf df dljfdsjf fd fdlf;dssfjdsslklkf df jdslfjdslfjldsjf dfl;djf',
-      user: 'beans'
+      user: 'beans',
     },
     {
       title: 'Testing 4',
       content:
         'dlkjkfldsksjf fdlfjdlkkjfldf df dljfdsjf fd fdlf;dssfjdsslklkf df jdslfjdslfjldsjf dfl;djf',
-      user: 'beans'
-    }
+      user: 'beans',
+    },
   ]
 
   res.json(posts)

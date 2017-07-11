@@ -1,9 +1,16 @@
 <template>
   <div>
     <app-nav></app-nav>
-    <h3 class="text-center">Daily Startup Battles</h3>
+    <h3 class="text-center">Blog</h3>
     <hr/>
-  
+
+    <div class="col-sm-12" v-for="post in blogPosts">
+      <h3>{{post.title}}</h3>
+      <div>{{post.content}}
+      </div>
+      <div>{{ post.user }}</div>
+    </div>
+    <!-- 
     <div class="col-sm-4" v-for="post in blogPosts">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -29,6 +36,7 @@
         <h2>Get Access to Private Startup Battles by Logging In</h2>
       </div>
     </div>
+    -->
   </div>
 </template>
 
